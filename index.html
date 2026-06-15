@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Центр поддержки канала</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: system-ui, 'Segoe UI', 'Roboto', 'Helvetica Neue', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(145deg, #0b2b26 0%, #0a1f1c 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            margin: 0;
+        }
+
+        .app-container {
+            max-width: 550px;
+            width: 100%;
+            background: rgba(255, 248, 225, 0.98);
+            border-radius: 56px;
+            box-shadow: 0 25px 45px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(255, 215, 150, 0.4);
+            overflow: hidden;
+            transition: all 0.2s ease;
+        }
+
+        .header {
+            background: #1e3a3a;
+            padding: 24px 20px 20px;
+            text-align: center;
+            color: #f9e7c2;
+            border-bottom: 2px solid #ffcd7e;
+        }
+
+        .header h1 {
+            font-size: 1.8rem;
+            margin: 0 0 6px;
+            letter-spacing: -0.5px;
+            font-weight: 700;
+        }
+
+        .header p {
+            margin: 0;
+            opacity: 0.85;
+            font-size: 0.9rem;
+        }
+
+        .content-pane {
+            padding: 24px 20px 30px;
+        }
+
+        .menu-buttons {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 28px;
+            justify-content: center;
+        }
+
+        .menu-btn {
+            background: #2d5f5a;
+            border: none;
+            padding: 10px 14px;
+            border-radius: 48px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #ffefcf;
+            cursor: pointer;
+            flex: 1 0 auto;
+            min-width: 80px;
+            transition: 0.1s linear;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+        }
+
+        .menu-btn:active {
+            background: #1f4541;
+            transform: translateY(2px);
+        }
+
+        .question-grid, .rules-submenu, .staff-submenu {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 20px 0 20px;
+            justify-content: center;
+        }
+
+        .q-btn, .rule-cat-btn, .staff-cat-btn {
+            background: #e9e0c7;
+            border: none;
+            padding: 10px 18px;
+            border-radius: 40px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: #2a4b3c;
+            cursor: pointer;
+            transition: 0.07s linear;
+            flex: 1 0 auto;
+            max-width: 170px;
+            text-align: center;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .q-btn:active, .rule-cat-btn:active, .staff-cat-btn:active {
+            background: #cfc29e;
+            transform: scale(0.97);
+        }
+
+        .back-btn {
+            background: #776b4b;
+            color: white;
+            border: none;
+            padding: 10px 18px;
+            border-radius: 32px;
+            font-weight: 600;
+            margin: 10px 0 5px;
+            cursor: pointer;
+            width: auto;
+            display: inline-block;
+        }
+
+        .answer-area {
+            background: #e7dfcb;
+            padding: 20px;
+            border-radius: 34px;
+            margin-top: 18px;
+            margin-bottom: 15px;
+            border-left: 7px solid #d68b2c;
+            font-size: 0.95rem;
+            line-height: 1.45;
+            color: #1f2f2a;
+            word-break: break-word;
+            white-space: pre-wrap;
+        }
+
+        .news-item, .request-card {
+            background: #fff7e8;
+            border-radius: 28px;
+            padding: 14px 18px;
+            margin-bottom: 16px;
+            border-left: 5px solid #d68b2c;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+        }
+        .news-title, .request-title {
+            font-weight: 800;
+            color: #aa6f20;
+            margin-bottom: 8px;
+            font-size: 1rem;
+        }
+        .news-date, .request-date {
+            font-size: 0.7rem;
+            color: #8f7a54;
+            margin-top: 6px;
+        }
+        .copy-btn {
+            background: #d68b2c;
+            border: none;
+            color: white;
+            padding: 6px 14px;
+            border-radius: 30px;
+            font-size: 0.75rem;
+            font-weight: bold;
+            margin-top: 10px;
+            cursor: pointer;
+            transition: 0.1s;
+        }
+        .copy-btn:active {
+            background: #b56f1e;
+        }
+
+        .welcome-message {
+            background: #e2dbbc;
+            padding: 12px 20px;
+            border-radius: 30px;
+            text-align: center;
+            font-weight: 500;
+            margin-bottom: 20px;
+            color: #3d2b1a;
+        }
+
+        footer {
+            font-size: 0.7rem;
+            text-align: center;
+            padding: 10px;
+            color: #7e6a48;
+            background: #fcf5e3;
+            border-top: 1px solid #eddbaa;
+        }
+
+        button {
+            user-select: none;
+        }
+        hr {
+            margin: 12px 0;
+        }
+    </style>
+</head>
+<body>
+<div class="app-container" id="appRoot">
+    <div class="header">
+        <h1>✨ SUPPORT ZONE ✨</h1>
+        <p>Ваш помощник по каналу</p>
+    </div>
+    <div class="content-pane" id="dynamicContent">
+        <!-- Контент загружается динамически -->
+    </div>
+    <footer>© Центр поддержки | всегда на связи</footer>
+</div>
+
+<script>
+    // ---------- ОТВЕТЫ НА ВОПРОСЫ ----------
+    const answersMap = {
+        1: "Новые посты выходят регулярно. Подождите немного.",
+        2: "Ролики выходят довольно редко, но не переживайте. Он скоро выйдет.",
+        3: "Трек уже в разработке.",
+        4: "Игра в кальмара уже разработке. План уже составлен и игры уже почти.",
+        5: "Персонаж уже найден и уже снимается, но ролики с этим персонажем уже есть.",
+        6: "Админом канала является человек, с которым Миша дружит.",
+        7: "Заявку можно подать через чат написав сообщение \"Заявка №1+насколько заинтересованы в этом+количество лет\". С вами свяжется агент и спросит правила все. После этого вы станете админом.",
+        8: "Розыгрыш проведётся в скором времени. Розыгрыш УЖЕ обсуждается с Мишей.",
+        9: "Сотрудничать с администрацией и каналом.",
+        10: "При нарушении писать админу в чат и прикреплять скрины нарушения.",
+        11: "Условия можно найти в разделе правила—>для сотрудничества.",
+        12: "Мы уже разрабатываем. Игра будет скоро и думаем над сюжетом. Ожидайте.",
+        13: "16.",
+        14: "Пока не планируется.",
+        15: "Изучите правила, напишите в чат \"Заявка №2+причина почему хотите им стать+насколько сильно заинтересованы в этом+количество лет\". Мы с вами после этого свяжемся.",
+        16: "Правила—>для агентов поддержки.",
+        17: "Потому, что монтаж занимает много времени.",
+        18: "Напишите в чат \"заявка №3+вопрос\". Мы прочитаем и ответим."
+    };
+
+    function getFormattedAnswer(questionId) {
+        const answerText = answersMap[questionId] || "Ответ временно недоступен. Напишите в чат канала.";
+        return `здравствуйте, уважаемый подписчик. Вот ответ\n${answerText}`;
+    }
+
+    function getComplaintText() {
+        return "здравствуйте. Приносим извинения если сделано что-то неправильно. Напишите в чат канала: \"Заявка №4+жалоба на кого+текст жалобы\" и мы вам ответим";
+    }
+
+    // ---------- ПРАВИЛА ----------
+    const rulesData = {
+        1: [
+            "1. Запрещена реклама", "2. Маты (ненормативная лексика запрещена)", "3. Неадекватное поведение",
+            "4. Оскорбление родных", "5. Оскорбление администрации", "6. Спам (повтор сообщений/флуд)",
+            "7. Запрещены политические и религиозные провокации", "8. Запрещён слив личной информации участников",
+            "9. Уважайте друг друга, любые формы буллинга запрещены", "10. Запрещены ссылки на сторонние ресурсы без согласия админа",
+            "11. Запрещены голосовые сообщения без спроса в чате", "12. Токсичное поведение = бан на 7 дней",
+            "13. Запрещены фейковые новости о канале", "14. Не разрешается выдавать себя за администрацию"
+        ],
+        2: [
+            "1. Отвечать корректно", "2. Отвечать правильно (по факту)", "3. Если не знаешь ответ, то обратиться за помощью к админам",
+            "4. Если вопрос не понятен, то написать: \"Здравствуйте, уважаемый подписчик, уточните, пожалуйста, вопрос\"",
+            "5. Отвечать чётко и без грамматических ошибок", "6. Отвечать на вопросы при первой же возможности",
+            "7. Отвечать через упоминание человека, который задал вопрос", "8. Отвечать соблюдая правила канала",
+            "9. Отвечать адекватно", "10. Агент может быть снят за грубое нарушение правил",
+            "11. Каждый ответ должен быть сохранен в чате", "12. Обращаться к участникам канала на Вы",
+            "13. Запрещено давать ложную информацию о канале", "14. Агент должен ежедневно проверять новые вопросы",
+            "15. При конфликте приглашать модератора, а не спорить", "16. Не разглашать личные данные участников"
+        ],
+        3: [
+            "1. Модератор может отвечать на жалобы", "2. Отвечать корректно", "3. Общаться со всеми на Вы",
+            "4. Соблюдать правила этикета", "5. Выдавать предупреждения до бана (3 предупреждения)",
+            "6. Не удалять сообщения без доказательств", "7. Вносить предложения админам по улучшению чата",
+            "8. Проверять жалобы в течение 12 часов", "9. Модератор не имеет права разглашать внутренние чаты админов",
+            "10. Фиксировать грубые нарушения в специальном логе", "11. Помогать агентам поддержки в сложных ситуациях",
+            "12. Модератор обязан хранить нейтралитет в конфликтах"
+        ],
+        4: [
+            "1. Банить по правилам", "2. При наказании снимать нарушение (доказательства)",
+            "3. Хранить доказательства в течении месяца", "4. Показывать доказательство при первом же требовании главного админа",
+            "5. Админ не может использовать права в личных целях", "6. Все баны должны быть согласованы с правилами канала",
+            "7. Админ должен разбирать апелляции за 48 часов", "8. Запрещено выдавать роли без веской причины",
+            "9. Помогать агентам и модераторам в сложных ситуациях", "10. Соблюдать конфиденциальность личных данных участников",
+            "11. Админ обязан отчитываться о крупных банах перед главным админом", "12. Принимать окончательное решение по спорным жалобам"
+        ]
+    };
+
+    function renderSpecificRule(ruleId) {
+        const rulesList = rulesData[ruleId];
+        if (!rulesList) return "Правила не найдены.";
+        let html = `<ul style="margin:0; padding-left: 20px;">`;
+        rulesList.forEach(rule => { html += `<li style="margin-bottom: 8px;">${escapeHtml(rule)}</li>`; });
+        html += `</ul>`;
+        return html;
+    }
+
+    // ---------- НОВОСТИ (две указанные) ----------
+    function getNewsHtml() {
+        const newsItems = [
+            { 
+                title: "🔔 НАБОР АГЕНТОВ ПОДДЕРЖКИ", 
+                content: "Идёт набор агентов поддержки. Кто желает поучаствовать, тот в вопросах скопирует заявку и отправит в правильный чат, заполнив её.", 
+                date: "Актуально сейчас" 
+            },
+            { 
+                title: "💡 РАЗВИТИЕ КАНАЛА", 
+                content: "Для того, чтобы поучаствовать в развитии канала, надо отправить в чат \"Идея для чего+текст идеи\"", 
+                date: "Постоянная рубрика" 
+            }
+        ];
+        let newsHtml = `<div style="margin-bottom: 12px;"><button class="back-btn" id="backFromNewsBtn">◀ Назад в меню</button></div>`;
+        newsHtml += `<div style="max-height: 450px; overflow-y: auto; padding-right: 5px;">`;
+        newsItems.forEach(item => {
+            newsHtml += `
+                <div class="news-item">
+                    <div class="news-title">${escapeHtml(item.title)}</div>
+                    <div>${escapeHtml(item.content)}</div>
+                    <div class="news-date">📅 ${escapeHtml(item.date)}</div>
+                </div>
+            `;
+        });
+        newsHtml += `</div>`;
+        return newsHtml;
+    }
+
+    // ---------- ЗАЯВКИ (ОТДЕЛЬНАЯ ПАПКА) ----------
+    // Собираем все заявки из разных частей системы в одном месте
+    function getRequestsHtml() {
+        // Шаблоны заявок согласно ТЗ
+        const requestsList = [
+            {
+                title: "📝 Заявка №1 (Модератор / Админ канала)",
+                description: "Для подачи заявки на модератора (или админа) отправьте сообщение в чат канала по следующему шаблону:",
+                template: "Заявка №1+насколько заинтересованы в этом+количество лет",
+                note: "Пример: Заявка №1+очень заинтересован, хочу помогать+16 лет"
+            },
+            {
+                title: "📝 Заявка №2 (Агент поддержки)",
+                description: "Чтобы стать агентом поддержки, отправьте в чат:",
+                template: "Заявка №2+причина почему хотите им стать+насколько сильно заинтересованы в этом+количество лет",
+                note: "Пример: Заявка №2+люблю помогать подписчикам+очень сильно+17 лет"
+            },
+            {
+                title: "📝 Заявка №3 (Вопрос / Другое)",
+                description: "Если у вас есть вопрос, которого нет в списке, или вы хотите что-то предложить:",
+                template: "заявка №3+вопрос",
+                note: "Пример: заявка №3+Как попасть на закрытый стрим?"
+            },
+            {
+                title: "📝 Заявка №4 (Жалоба)",
+                description: "Для подачи жалобы на участника или действие:",
+                template: "Заявка №4+жалоба на кого+текст жалобы",
+                note: "Пример: Заявка №4+участник @ivan+оскорбляет других"
+            }
+        ];
+
+        let html = `<div style="margin-bottom: 12px;"><button class="back-btn" id="backFromRequestsBtn">◀ Назад в меню</button></div>`;
+        html += `<div style="margin-bottom: 12px; background:#ecdcaa; border-radius: 28px; padding: 12px; text-align:center;">
+                    📁 Здесь собраны ВСЕ заявки, которые упоминаются в поддержке. Скопируйте шаблон и отправьте в чат.
+                 </div>`;
+        html += `<div style="max-height: 500px; overflow-y: auto; padding-right: 5px;">`;
+        
+        requestsList.forEach(req => {
+            html += `
+                <div class="request-card">
+                    <div class="request-title">${escapeHtml(req.title)}</div>
+                    <div style="margin-bottom: 8px;">${escapeHtml(req.description)}</div>
+                    <div style="background:#e9ddb0; padding: 10px; border-radius: 20px; font-family: monospace; font-size: 0.85rem; word-break: break-all;">
+                        ${escapeHtml(req.template)}
+                    </div>
+                    <div style="font-size: 0.8rem; margin-top: 8px; color:#7a672e;">💡 ${escapeHtml(req.note)}</div>
+                    <button class="copy-btn" data-copytext="${escapeHtmlAttr(req.template)}">📋 Скопировать шаблон</button>
+                </div>
+            `;
+        });
+        
+        // Также добавим напоминание про идеи для развития (из новости)
+        html += `
+            <div class="request-card">
+                <div class="request-title">💡 Идея для развития канала</div>
+                <div>Формат для отправки идей в чат:</div>
+                <div style="background:#e9ddb0; padding: 10px; border-radius: 20px; font-family: monospace; margin-top: 8px;">
+                    Идея для чего+текст идеи
+                </div>
+                <div style="font-size: 0.8rem; margin-top: 8px;">Пример: Идея для конкурса+провести розыгрыш на 1000 подписчиков</div>
+                <button class="copy-btn" data-copytext="Идея для +текст идеи">📋 Скопировать формат</button>
+            </div>
+        `;
+        html += `</div>`;
+        return html;
+    }
+
+    // Helper для экранирования атрибутов
+    function escapeHtmlAttr(str) {
+        if (!str) return '';
+        return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+    }
+
+    // ---------- СОТРУДНИКИ ----------
+    function getStaffInfo(staffType) {
+        switch(staffType) {
+            case 'agents': return "нет данных";
+            case 'mods': return "нет данных";
+            case 'admins': return "нет данных";
+            case 'headadmin': return "лучший друг Миши";
+            case 'creator': return "Миша";
+            default: return "информация отсутствует";
+        }
+    }
+
+    // ---------- ГЛОБАЛЬНОЕ СОСТОЯНИЕ ----------
+    let currentMode = "main"; // main, questions, complaint, rules, staff, news, requests
+
+    const questionList = [
+        { id: 1, text: "1. Когда выйдет новый пост" },
+        { id: 2, text: "2. Когда выйдет новый ролик" },
+        { id: 3, text: "3. Когда выйдет трек" },
+        { id: 4, text: "4. Когда будет игра в кальмара" },
+        { id: 5, text: "5. Когда появится новый персонаж на канале" },
+        { id: 6, text: "6. Кто является админом канала" },
+        { id: 7, text: "7. Как подать заявку на модератора" },
+        { id: 8, text: "8. Когда будет розыгрыш подарков в тг" },
+        { id: 9, text: "9. Как заработать звёзды в тг?" },
+        { id: 10, text: "10. Как сотрудничать с каналом?" },
+        { id: 11, text: "11. Какие условия должны соблюдаться на сотрудничестве с каналом?" },
+        { id: 12, text: "12. Когда выйдет собственная игра?" },
+        { id: 13, text: "13. Сколько должно быть лет модератору канала" },
+        { id: 14, text: "14. Когда будет видео в реальной жизни" },
+        { id: 15, text: "15. Как стать агентом поддержки канала?" },
+        { id: 16, text: "16. Каковы условия должны быть соблюдены, чтобы стать агентом поддержки" },
+        { id: 17, text: "17. Почему ролики выходят редко?" },
+        { id: 18, text: "18. Другое" }
+    ];
+
+    // ---------- ОТРИСОВКА РЕЖИМОВ ----------
+    function renderMainMenu() {
+        return `
+            <div class="welcome-message">
+                📢 Добро пожаловать в центр поддержки канала!
+            </div>
+            <div class="menu-buttons">
+                <button class="menu-btn" id="questionsBtn">❓ Вопрос</button>
+                <button class="menu-btn" id="complaintBtn">⚠️ Жалоба</button>
+                <button class="menu-btn" id="rulesBtn">📖 Правила</button>
+                <button class="menu-btn" id="staffBtn">👥 Сотрудники</button>
+                <button class="menu-btn" id="newsBtn">📰 Новости</button>
+                <button class="menu-btn" id="requestsBtn">📋 Заявки</button>
+            </div>
+            <div id="infoArea" class="answer-area" style="background: #fff2df; text-align: center;">
+                📌 Выберите нужный раздел
+            </div>
+        `;
+    }
+
+    function renderQuestionsPanel() {
+        let btnsHtml = `<div style="margin-bottom: 8px;"><button class="back-btn" id="backFromQuestionsBtn">◀ Назад в меню</button></div>
+                        <div class="question-grid">`;
+        questionList.forEach(q => {
+            btnsHtml += `<button class="q-btn" data-qid="${q.id}">${escapeHtml(q.text)}</button>`;
+        });
+        btnsHtml += `</div><div id="questionAnswerArea" class="answer-area" style="background:#F4EAD5;">🔍 Выберите вопрос, чтобы получить подробный ответ</div>`;
+        return btnsHtml;
+    }
+
+    function renderComplaintPanel() {
+        return `
+            <div><button class="back-btn" id="backFromComplaintBtn">◀ Назад в меню</button></div>
+            <div class="answer-area" style="margin-top:20px; background:#ffe4ca;">
+                ${escapeHtml(getComplaintText())}
+            </div>
+        `;
+    }
+
+    function renderRulesChoice() {
+        return `
+            <div style="margin-bottom: 10px;">
+                <button class="back-btn" id="backToMainBtn">◀ Назад в меню</button>
+            </div>
+            <div class="rules-submenu">
+                <button class="rule-cat-btn" data-rule="1">📜 Правила канала</button>
+                <button class="rule-cat-btn" data-rule="2">🤝 Для агентов поддержки</button>
+                <button class="rule-cat-btn" data-rule="3">🛡️ Для модераторов</button>
+                <button class="rule-cat-btn" data-rule="4">👑 Для админов</button>
+            </div>
+            <div id="rulesDisplayArea" class="answer-area" style="background: #f1ecdd;">✨ Выберите раздел правил</div>
+        `;
+    }
+
+    function renderStaffPanel() {
+        return `
+            <div style="margin-bottom: 10px;">
+                <button class="back-btn" id="backToMainStaffBtn">◀ Назад в меню</button>
+            </div>
+            <div class="staff-submenu">
+                <button class="staff-cat-btn" data-staff="agents">👥 Агенты поддержки</button>
+                <button class="staff-cat-btn" data-staff="mods">⚙️ Модераторы</button>
+                <button class="staff-cat-btn" data-staff="admins">🔒 Админы</button>
+                <button class="staff-cat-btn" data-staff="headadmin">🌟 Главный админ</button>
+                <button class="staff-cat-btn" data-staff="creator">🎬 Создатель</button>
+            </div>
+            <div id="staffAnswerArea" class="answer-area" style="background:#efe3c9; text-align:center;">🗂️ Выберите категорию сотрудников</div>
+        `;
+    }
+
+    function renderNewsPanel() {
+        return getNewsHtml();
+    }
+
+    function renderRequestsPanel() {
+        return getRequestsHtml();
+    }
+
+    function refreshUI() {
+        const container = document.getElementById("dynamicContent");
+        let innerHtml = "";
+        switch(currentMode) {
+            case "main": innerHtml = renderMainMenu(); break;
+            case "questions": innerHtml = renderQuestionsPanel(); break;
+            case "complaint": innerHtml = renderComplaintPanel(); break;
+            case "rules": innerHtml = renderRulesChoice(); break;
+            case "staff": innerHtml = renderStaffPanel(); break;
+            case "news": innerHtml = renderNewsPanel(); break;
+            case "requests": innerHtml = renderRequestsPanel(); break;
+            default: innerHtml = renderMainMenu();
+        }
+        container.innerHTML = innerHtml;
+        attachPostRenderEvents();
+    }
+
+    function attachPostRenderEvents() {
+        const questionsBtn = document.getElementById("questionsBtn");
+        const complaintBtn = document.getElementById("complaintBtn");
+        const rulesBtn = document.getElementById("rulesBtn");
+        const staffBtn = document.getElementById("staffBtn");
+        const newsBtn = document.getElementById("newsBtn");
+        const requestsBtn = document.getElementById("requestsBtn");
+
+        if (questionsBtn) questionsBtn.onclick = () => { currentMode = "questions"; refreshUI(); };
+        if (complaintBtn) complaintBtn.onclick = () => { currentMode = "complaint"; refreshUI(); };
+        if (rulesBtn) rulesBtn.onclick = () => { currentMode = "rules"; refreshUI(); };
+        if (staffBtn) staffBtn.onclick = () => { currentMode = "staff"; refreshUI(); };
+        if (newsBtn) newsBtn.onclick = () => { currentMode = "news"; refreshUI(); };
+        if (requestsBtn) requestsBtn.onclick = () => { currentMode = "requests"; refreshUI(); };
+
+        const backQuestions = document.getElementById("backFromQuestionsBtn");
+        if (backQuestions) backQuestions.onclick = () => { currentMode = "main"; refreshUI(); };
+        const backComplaint = document.getElementById("backFromComplaintBtn");
+        if (backComplaint) backComplaint.onclick = () => { currentMode = "main"; refreshUI(); };
+        const backRulesMain = document.getElementById("backToMainBtn");
+        if (backRulesMain) backRulesMain.onclick = () => { currentMode = "main"; refreshUI(); };
+        const backStaffMain = document.getElementById("backToMainStaffBtn");
+        if (backStaffMain) backStaffMain.onclick = () => { currentMode = "main"; refreshUI(); };
+        const backNewsBtn = document.getElementById("backFromNewsBtn");
+        if (backNewsBtn) backNewsBtn.onclick = () => { currentMode = "main"; refreshUI(); };
+        const backRequestsBtn = document.getElementById("backFromRequestsBtn");
+        if (backRequestsBtn) backRequestsBtn.onclick = () => { currentMode = "main"; refreshUI(); };
+
+        // Вопросы
+        const qButtons = document.querySelectorAll(".q-btn");
+        qButtons.forEach(btn => {
+            btn.addEventListener("click", (e) => {
+                const qid = parseInt(btn.getAttribute("data-qid"));
+                const answerDiv = document.getElementById("questionAnswerArea");
+                if (!isNaN(qid) && answersMap[qid]) {
+                    if (answerDiv) answerDiv.innerHTML = escapeHtml(getFormattedAnswer(qid)).replace(/\n/g, '<br>');
+                } else if(answerDiv) answerDiv.innerHTML = "❓ Ответ не найден. Напишите в чат заявку №3";
+            });
+        });
+
+        // Правила
+        const ruleCatBtns = document.querySelectorAll(".rule-cat-btn");
+        ruleCatBtns.forEach(btn => {
+            btn.addEventListener("click", (e) => {
+                const ruleId = parseInt(btn.getAttribute("data-rule"));
+                const displayDiv = document.getElementById("rulesDisplayArea");
+                if (displayDiv && ruleId >=1 && ruleId <=4) displayDiv.innerHTML = renderSpecificRule(ruleId);
+                else if(displayDiv) displayDiv.innerHTML = "⚠️ Неверный раздел";
+            });
+        });
+
+        // Сотрудники
+        const staffCatBtns = document.querySelectorAll(".staff-cat-btn");
+        staffCatBtns.forEach(btn => {
+            btn.addEventListener("click", (e) => {
+                const staffType = btn.getAttribute("data-staff");
+                const info = getStaffInfo(staffType);
+                const staffArea = document.getElementById("staffAnswerArea");
+                if (staffArea) staffArea.innerHTML = info === "нет данных" ? `<em>📭 ${escapeHtml(info)}</em>` : `<strong>✨ ${escapeHtml(info)}</strong>`;
+            });
+        });
+
+        // Копирование шаблонов в разделе заявок
+        const copyBtns = document.querySelectorAll(".copy-btn");
+        copyBtns.forEach(btn => {
+            btn.addEventListener("click", (e) => {
+                const textToCopy = btn.getAttribute("data-copytext");
+                if (textToCopy) {
+                    navigator.clipboard.writeText(textToCopy).then(() => {
+                        const originalText = btn.innerText;
+                        btn.innerText = "✅ Скопировано!";
+                        setTimeout(() => { btn.innerText = originalText; }, 1500);
+                    }).catch(() => alert("Не удалось скопировать"));
+                }
+            });
+        });
+    }
+
+    function escapeHtml(str) {
+        if (!str) return '';
+        return str.replace(/[&<>]/g, function(m) {
+            if (m === '&') return '&amp;';
+            if (m === '<') return '&lt;';
+            if (m === '>') return '&gt;';
+            return m;
+        });
+    }
+
+    refreshUI();
+</script>
+</body>
+</html>
