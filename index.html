@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Центр поддержки</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: #f8f7f4;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      color: #1e1e1e;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+    }
+
+    .app-container {
+      max-width: 720px;
+      width: 100%;
+      background: #ffffff;
+      border-radius: 40px;
+      padding: 2.5rem 3rem;
+      box-shadow: 0 40px 80px -24px rgba(0, 0, 0, 0.06);
+      transition: 0.2s;
+    }
+
+    @media (max-width: 640px) {
+      .app-container {
+        padding: 1.5rem;
+        border-radius: 32px;
+      }
+    }
+
+    /* ——— Хедер ——— */
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      flex-wrap: wrap;
+      gap: 1rem 0.75rem;
+      margin-bottom: 2.5rem;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.04);
+      padding-bottom: 1.25rem;
+    }
+
+    .logo h1 {
+      font-weight: 400;
+      font-size: 1.8rem;
+      letter-spacing: -0.02em;
+      color: #1e1e1e;
+    }
+    .logo span {
+      font-weight: 300;
+      color: #8b8b8b;
+      margin-left: 0.25rem;
+      font-size: 1rem;
+    }
+    .logo .sub {
+      display: block;
+      font-size: 0.8rem;
+      font-weight: 300;
+      color: #a0a0a0;
+      margin-top: 0.15rem;
+    }
+
+    /* ——— Кнопки меню ——— */
+    .menu-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .menu-btn {
+      background: #f5f5f5;
+      border: none;
+      padding: 0.5rem 1.2rem;
+      border-radius: 40px;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.8rem;
+      font-weight: 400;
+      color: #2c2c2c;
+      cursor: pointer;
+      transition: 0.15s;
+      border: 1px solid transparent;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+    .menu-btn i {
+      color: #8b8b8b;
+      font-size: 0.8rem;
+    }
+    .menu-btn:hover {
+      border-color: #d0d0d0;
+      background: #f0f0f0;
+    }
+    .menu-btn:active {
+      transform: scale(0.97);
+    }
+    .menu-btn.special {
+      background: #1e1e1e;
+      color: #ffffff;
+    }
+    .menu-btn.special i {
+      color: #ffffff;
+    }
+    .menu-btn.special:hover {
+      background: #000000;
+    }
+
+    .back-btn {
+      background: transparent;
+      border: 1px solid #d0d0d0;
+      padding: 0.4rem 1.2rem;
+      border-radius: 40px;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.8rem;
+      font-weight: 400;
+      color: #2c2c2c;
+      cursor: pointer;
+      transition: 0.15s;
+      margin-bottom: 1rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+    .back-btn:hover {
+      border-color: #1e1e1e;
+      background: #1e1e1e;
+      color: #ffffff;
+    }
+    .back-btn:hover i {
+      color: #ffffff;
+    }
+
+    .welcome-message {
+      background: #f8f7f4;
+      padding: 0.75rem 1.2rem;
+      border-radius: 16px;
+      font-size: 0.9rem;
+      font-weight: 400;
+      color: #2c2c2c;
+      margin-bottom: 1.5rem;
+      text-align: center;
+    }
+
+    /* ——— Область ответа ——— */
+    .answer-area {
+      background: #f8f7f4;
+      padding: 1.2rem 1.5rem;
+      border-radius: 24px;
+      margin-top: 1.2rem;
+      font-size: 0.9rem;
+      line-height: 1.6;
+      color: #2a2a2a;
+      border-left: 3px solid #1e1e1e;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
+    /* ——— Сетки кнопок ——— */
+    .question-grid,
+    .rules-submenu,
+    .staff-submenu {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin: 1rem 0 1.2rem;
+    }
+
+    .q-btn,
+    .rule-cat-btn,
+    .staff-cat-btn {
+      background: #f5f5f5;
+      border: none;
+      padding: 0.4rem 1rem;
+      border-radius: 40px;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.75rem;
+      font-weight: 400;
+      color: #2c2c2c;
+      cursor: pointer;
+      transition: 0.15s;
+      flex: 1 0 auto;
+      max-width: 180px;
+      text-align: center;
+      border: 1px solid transparent;
+    }
+    .q-btn:hover,
+    .rule-cat-btn:hover,
+    .staff-cat-btn:hover {
+      border-color: #d0d0d0;
+      background: #f0f0f0;
+    }
+    .q-btn:active,
+    .rule-cat-btn:active,
+    .staff-cat-btn:active {
+      transform: scale(0.97);
+    }
+
+    /* ——— Карточки новостей, заявок, правил ——— */
+    .news-item,
+    .request-card {
+      background: #f8f7f4;
+      border-radius: 24px;
+      padding: 1rem 1.5rem;
+      margin-bottom: 1rem;
+      border-left: 3px solid #1e1e1e;
+    }
+    .news-title,
+    .request-title {
+      font-weight: 500;
+      font-size: 0.95rem;
+      color: #1e1e1e;
+      margin-bottom: 0.4rem;
+    }
+    .news-date {
+      font-size: 0.7rem;
+      color: #a0a0a0;
+      margin-top: 0.4rem;
+    }
+
+    .copy-btn {
+      background: transparent;
+      border: 1px solid #d0d0d0;
+      padding: 0.3rem 1rem;
+      border-radius: 40px;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.7rem;
+      font-weight: 400;
+      color: #2c2c2c;
+      cursor: pointer;
+      transition: 0.15s;
+      margin-top: 0.6rem;
+    }
+    .copy-btn:hover {
+      border-color: #1e1e1e;
+      background: #1e1e1e;
+      color: #ffffff;
+    }
+
+    .rule-list {
+      list-style: none;
+      padding-left: 0;
+    }
+    .rule-list li {
+      padding: 0.3rem 0 0.3rem 1.2rem;
+      position: relative;
+      font-size: 0.85rem;
+      line-height: 1.5;
+      color: #3a3a3a;
+      border-bottom: 1px solid #f0f0f0;
+    }
+    .rule-list li::before {
+      content: "—";
+      position: absolute;
+      left: 0;
+      color: #c5c5c5;
+    }
+    .rule-list li:last-child {
+      border-bottom: none;
+    }
+
+    .game-intro {
+      font-weight: 500;
+      font-size: 1.1rem;
+      margin-bottom: 1rem;
+      color: #1e1e1e;
+    }
+
+    .game-rules-wrap {
+      max-height: 460px;
+      overflow-y: auto;
+      padding-right: 0.5rem;
+    }
+    .game-rules-wrap::-webkit-scrollbar {
+      width: 4px;
+    }
+    .game-rules-wrap::-webkit-scrollbar-track {
+      background: #f0f0f0;
+      border-radius: 10px;
+    }
+    .game-rules-wrap::-webkit-scrollbar-thumb {
+      background: #d0d0d0;
+      border-radius: 10px;
+    }
+
+    footer {
+      margin-top: 2.5rem;
+      border-top: 1px solid rgba(0, 0, 0, 0.04);
+      padding-top: 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+      font-size: 0.7rem;
+      color: #b0b0b0;
+    }
+
+    /* ——— Адаптив ——— */
+    @media (max-width: 640px) {
+      .app-container { padding: 1.5rem; }
+      .question-grid .q-btn { max-width: 100%; }
+      .menu-btn { font-size: 0.75rem; padding: 0.4rem 0.9rem; }
+    }
+  </style>
+</head>
+<body>
+<div class="app-container" id="appRoot">
+  <div class="header">
+    <div class="logo">
+      <h1>✦ support</h1>
+      <span class="sub">центр поддержки канала</span>
+    </div>
+  </div>
+
+  <div id="dynamicContent">
+    <!-- контент загружается динамически -->
+  </div>
+
+  <footer>
+    <span>© центр поддержки</span>
+    <span>всегда на связи</span>
+  </footer>
+</div>
+
+<script>
+  // ---------- ОТВЕТЫ ----------
+  const answersMap = {
+    1: "Новые посты выходят регулярно. Подождите немного.",
+    2: "Ролики выходят довольно редко, но не переживайте. Он скоро выйдет.",
+    3: "Трек уже в разработке.",
+    4: "Игра в кальмара уже разработке. План уже составлен и игры уже почти.",
+    5: "Персонаж уже найден и уже снимается, но ролики с этим персонажем уже есть.",
+    6: "Админом канала является человек, с которым Миша дружит.",
+    7: "Заявку можно подать через чат написав сообщение \"Заявка №1+насколько заинтересованы в этом+количество лет\". С вами свяжется агент и спросит правила все. После этого вы станете админом.",
+    8: "Розыгрыш проведётся в скором времени. Розыгрыш УЖЕ обсуждается с Мишей.",
+    9: "Сотрудничать с администрацией и каналом.",
+    10: "При нарушении писать админу в чат и прикреплять скрины нарушения.",
+    11: "Условия можно найти в разделе правила—>для сотрудничества.",
+    12: "Мы уже разрабатываем. Игра будет скоро и думаем над сюжетом. Ожидайте.",
+    13: "16.",
+    14: "Пока не планируется.",
+    15: "Изучите правила, напишите в чат \"Заявка №2+причина почему хотите им стать+насколько сильно заинтересованы в этом+количество лет\". Мы с вами после этого свяжемся.",
+    16: "Правила—>для агентов поддержки.",
+    17: "Потому, что монтаж занимает много времени.",
+    18: "Напишите в чат \"заявка №3+вопрос\". Мы прочитаем и ответим."
+  };
+
+  function getFormattedAnswer(qid) {
+    const text = answersMap[qid] || "Ответ временно недоступен. Напишите в чат канала.";
+    return `здравствуйте, уважаемый подписчик. Вот ответ\n${text}`;
+  }
+
+  function getComplaintText() {
+    return "здравствуйте. Приносим извинения если сделано что-то неправильно. Напишите в чат канала: \"Заявка №4+жалоба на кого+текст жалобы\" и мы вам ответим";
+  }
+
+  // ---------- ПРАВИЛА ----------
+  const rulesData = {
+    1: [
+      "Запрещена реклама", "Маты (ненормативная лексика запрещена)", "Неадекватное поведение",
+      "Оскорбление родных", "Оскорбление администрации", "Спам (повтор сообщений/флуд)",
+      "Запрещены политические и религиозные провокации", "Запрещён слив личной информации участников",
+      "Уважайте друг друга, любые формы буллинга запрещены", "Запрещены ссылки на сторонние ресурсы без согласия админа",
+      "Запрещены голосовые сообщения без спроса в чате", "Токсичное поведение = бан на 7 дней",
+      "Запрещены фейковые новости о канале", "Не разрешается выдавать себя за администрацию"
+    ],
+    2: [
+      "Отвечать корректно", "Отвечать правильно (по факту)", "Если не знаешь ответ, то обратиться за помощью к админам",
+      "Если вопрос не понятен, то написать: \"Здравствуйте, уважаемый подписчик, уточните, пожалуйста, вопрос\"",
+      "Отвечать чётко и без грамматических ошибок", "Отвечать на вопросы при первой же возможности",
+      "Отвечать через упоминание человека, который задал вопрос", "Отвечать соблюдая правила канала",
+      "Отвечать адекватно", "Агент может быть снят за грубое нарушение правил",
+      "Каждый ответ должен быть сохранен в чате", "Обращаться к участникам канала на Вы",
+      "Запрещено давать ложную информацию о канале", "Агент должен ежедневно проверять новые вопросы",
+      "При конфликте приглашать модератора, а не спорить", "Не разглашать личные данные участников"
+    ],
+    3: [
+      "Модератор может отвечать на жалобы", "Отвечать корректно", "Общаться со всеми на Вы",
+      "Соблюдать правила этикета", "Выдавать предупреждения до бана (3 предупреждения)",
+      "Не удалять сообщения без доказательств", "Вносить предложения админам по улучшению чата",
+      "Проверять жалобы в течение 12 часов", "Модератор не имеет права разглашать внутренние чаты админов",
+      "Фиксировать грубые нарушения в специальном логе", "Помогать агентам поддержки в сложных ситуациях",
+      "Модератор обязан хранить нейтралитет в конфликтах"
+    ],
+    4: [
+      "Банить по правилам", "При наказании снимать нарушение (доказательства)",
+      "Хранить доказательства в течении месяца", "Показывать доказательство при первом же требовании главного админа",
+      "Админ не может использовать права в личных целях", "Все баны должны быть согласованы с правилами канала",
+      "Админ должен разбирать апелляции за 48 часов", "Запрещено выдавать роли без веской причины",
+      "Помогать агентам и модераторам в сложных ситуациях", "Соблюдать конфиденциальность личных данных участников",
+      "Админ обязан отчитываться о крупных банах перед главным админом", "Принимать окончательное решение по спорным жалобам"
+    ]
+  };
+
+  function renderSpecificRule(ruleId) {
+    const list = rulesData[ruleId];
+    if (!list) return "Правила не найдены.";
+    let html = `<ul class="rule-list">`;
+    list.forEach(r => { html += `<li>${escapeHtml(r)}</li>`; });
+    html += `</ul>`;
+    return html;
+  }
+
+  // ---------- НОВОСТИ ----------
+  function getNewsHtml() {
+    const items = [
+      { title: "🔔 Набор агентов поддержки", content: "Идёт набор агентов поддержки. Кто желает поучаствовать, тот в вопросах скопирует заявку и отправит в правильный чат, заполнив её.", date: "Актуально" },
+      { title: "💡 Развитие канала", content: "Для того, чтобы поучаствовать в развитии канала, надо отправить в чат \"Идея для чего+текст идеи\"", date: "Постоянно" }
+    ];
+    let html = `<div><button class="back-btn" id="backFromNewsBtn"><i class="fa-regular fa-arrow-left"></i> назад</button></div>`;
+    items.forEach(item => {
+      html += `<div class="news-item"><div class="news-title">${escapeHtml(item.title)}</div><div>${escapeHtml(item.content)}</div><div class="news-date">${escapeHtml(item.date)}</div></div>`;
+    });
+    return html;
+  }
+
+  // ---------- ЗАЯВКИ ----------
+  function getRequestsHtml() {
+    const list = [
+      { title: "Заявка №1 (Модератор / Админ)", desc: "Шаблон для подачи:", template: "Заявка №1+насколько заинтересованы в этом+количество лет", note: "Пример: Заявка №1+очень заинтересован, хочу помогать+16 лет" },
+      { title: "Заявка №2 (Агент поддержки)", desc: "Шаблон:", template: "Заявка №2+причина почему хотите им стать+насколько сильно заинтересованы в этом+количество лет", note: "Пример: Заявка №2+люблю помогать+очень сильно+17 лет" },
+      { title: "Заявка №3 (Вопрос / Другое)", desc: "Шаблон:", template: "заявка №3+вопрос", note: "Пример: заявка №3+Как попасть на закрытый стрим?" },
+      { title: "Заявка №4 (Жалоба)", desc: "Шаблон:", template: "Заявка №4+жалоба на кого+текст жалобы", note: "Пример: Заявка №4+участник @ivan+оскорбляет" }
+    ];
+    let html = `<div><button class="back-btn" id="backFromRequestsBtn"><i class="fa-regular fa-arrow-left"></i> назад</button></div>
+                <div style="background:#f8f7f4; border-radius:16px; padding:0.8rem 1.2rem; margin-bottom:1.2rem; text-align:center; font-size:0.8rem;">Все заявки в одном месте. Скопируйте шаблон.</div>`;
+    list.forEach(req => {
+      html += `<div class="request-card">
+                <div class="request-title">${escapeHtml(req.title)}</div>
+                <div>${escapeHtml(req.desc)}</div>
+                <div style="background:#edeae5; padding:0.4rem 0.8rem; border-radius:12px; margin:0.5rem 0; font-family:monospace; font-size:0.8rem;">${escapeHtml(req.template)}</div>
+                <div style="font-size:0.75rem; color:#6b6560;">💡 ${escapeHtml(req.note)}</div>
+                <button class="copy-btn" data-copytext="${escapeHtmlAttr(req.template)}"><i class="fa-regular fa-copy"></i> скопировать</button>
+              </div>`;
+    });
+    html += `<div class="request-card">
+              <div class="request-title">💡 Идея для канала</div>
+              <div style="background:#edeae5; padding:0.4rem 0.8rem; border-radius:12px; font-family:monospace; font-size:0.8rem;">Идея для чего+текст идеи</div>
+              <button class="copy-btn" data-copytext="Идея для +текст идеи"><i class="fa-regular fa-copy"></i> скопировать</button>
+            </div>`;
+    return html;
+  }
+
+  // ---------- СОТРУДНИКИ ----------
+  function getStaffInfo(type) {
+    switch(type) {
+      case 'agents': return "нет данных";
+      case 'mods': return "нет данных";
+      case 'admins': return "нет данных";
+      case 'headadmin': return "лучший друг Миши";
+      case 'creator': return "Миша";
+      default: return "—";
+    }
+  }
+
+  // ---------- ИГРА В КАЛЬМАРА ----------
+  function getSquidGameHtml() {
+    const rules = [
+      "Не идти против правил.",
+      "Запрещается использовать любые предметы (исключая одежду и то, что выдал организатор).",
+      "Не оскорблять родителей, игроков и др.",
+      "Для игры надо иметь минимум 14 лет.",
+      "Не искать лазейки в правилах.",
+      "Нельзя приглашать кого-либо на игру с собой.",
+      "Запрещается фото и видеосъёмка.",
+      "За нарушение любого правила игрок исключается из игры",
+      "Запрещается распространять информацию про игру третьим лицам.",
+      "За нарушение правил игрок исключается из игры без права на возврат.",
+      "При нарушении правил сообщить создателю игры.",
+      "Запрещается заходить за пределы поля.",
+      "Запрещается использование смартфона во время проведения игры. СОВЕТ: на игру взять сумку для всех личных вещей.",
+      "Запрещается переговариваться во время прослушивания записи.",
+      "Если в записи просят сделать шаг вперёд, то это значит, что шаг должен быть не на полтора метра, а примерно 75 см.",
+      "Если не принести на игру расписку, то игрок не допускается до игры.",
+      "Перед игрой каждый игрок должен расписаться в листе. За что расписываетесь: за то, что вы прочитали правила игры и согласны с ними, готовы играть и в случае поражения вы не будете требовать приза, не будет возмущаться, если в него выстрелять несколько раз из водяного пистолета.",
+      "Для игры необходимо слушаться организаторов.",
+      "Запрещается перечить создателям.",
+      "За неподчинение игрок выбывает.",
+      "Игроки, которые выбыли — отправляются домой, либо ожидают, не мешая игрокам продолжать игру.",
+      "Если игрок выбыл, то ему запрещается говорить.",
+      "За подсказки выбывают сразу все игроки из диалога.",
+      "За использование телефона, либо других предметов, исключая тех, которые выдали организаторы — игрок покидает игру.",
+      "На игре смертей НЕ будет.",
+      "За глупые вопросы игрок выбывает.",
+      "За отказ выходить из игры — игра прекращается и приз остаётся организаторам.",
+      "Для того, чтобы получить номер, надо написать в тг @Talon4ick следующее сообщение: «Я, (ФИО), хочу участвовать в игре. Прошу выдать мне номер». После прочтения, вам напишут ваш порядковый номер в игре и после добавят в тг канал. Все остальные подробности будут там."
+    ];
+    let html = `<div><button class="back-btn" id="backFromGameBtn"><i class="fa-regular fa-arrow-left"></i> назад</button></div>
+                <div class="game-intro">🎮 Игра в кальмара</div>
+                <div class="game-rules-wrap"><ul class="rule-list">`;
+    rules.forEach(r => { html += `<li>${escapeHtml(r)}</li>`; });
+    html += `</ul></div>`;
+    return html;
+  }
+
+  // ---------- ГЛОБАЛЬНОЕ СОСТОЯНИЕ ----------
+  let currentMode = "main";
+
+  const questionList = [
+    { id: 1, text: "1. Когда выйдет новый пост" },
+    { id: 2, text: "2. Когда выйдет новый ролик" },
+    { id: 3, text: "3. Когда выйдет трек" },
+    { id: 4, text: "4. Когда будет игра в кальмара" },
+    { id: 5, text: "5. Когда появится новый персонаж" },
+    { id: 6, text: "6. Кто админ канала" },
+    { id: 7, text: "7. Заявка на модератора" },
+    { id: 8, text: "8. Розыгрыш подарков" },
+    { id: 9, text: "9. Звёзды в тг?" },
+    { id: 10, text: "10. Сотрудничество" },
+    { id: 11, text: "11. Условия сотрудничества" },
+    { id: 12, text: "12. Собственная игра" },
+    { id: 13, text: "13. Возраст модератора" },
+    { id: 14, text: "14. Видео в реальной жизни" },
+    { id: 15, text: "15. Агент поддержки" },
+    { id: 16, text: "16. Условия агента" },
+    { id: 17, text: "17. Почему ролики редко?" },
+    { id: 18, text: "18. Другое" }
+  ];
+
+  // ---------- РЕНДЕР ----------
+  function renderMainMenu() {
+    return `
+      <div class="welcome-message">добро пожаловать в центр поддержки</div>
+      <div class="menu-buttons">
+        <button class="menu-btn" id="questionsBtn"><i class="fa-regular fa-circle-question"></i> вопрос</button>
+        <button class="menu-btn" id="complaintBtn"><i class="fa-regular fa-triangle-exclamation"></i> жалоба</button>
+        <button class="menu-btn" id="rulesBtn"><i class="fa-regular fa-book"></i> правила</button>
+        <button class="menu-btn" id="staffBtn"><i class="fa-regular fa-users"></i> сотрудники</button>
+        <button class="menu-btn" id="newsBtn"><i class="fa-regular fa-newspaper"></i> новости</button>
+        <button class="menu-btn" id="requestsBtn"><i class="fa-regular fa-clipboard"></i> заявки</button>
+        <button class="menu-btn special" id="gameBtn"><i class="fa-regular fa-gamepad"></i> игра в кальмара</button>
+      </div>
+      <div class="answer-area" style="text-align:center; background:#f8f7f4; border-left-color:#d0d0d0;">выберите раздел</div>
+    `;
+  }
+
+  function renderQuestions() {
+    let html = `<div><button class="back-btn" id="backFromQuestionsBtn"><i class="fa-regular fa-arrow-left"></i> назад</button></div>
+                <div class="question-grid">`;
+    questionList.forEach(q => {
+      html += `<button class="q-btn" data-qid="${q.id}">${escapeHtml(q.text)}</button>`;
+    });
+    html += `</div><div id="questionAnswerArea" class="answer-area" style="background:#f8f7f4;">выберите вопрос</div>`;
+    return html;
+  }
+
+  function renderComplaint() {
+    return `<div><button class="back-btn" id="backFromComplaintBtn"><i class="fa-regular fa-arrow-left"></i> назад</button></div>
+            <div class="answer-area">${escapeHtml(getComplaintText())}</div>`;
+  }
+
+  function renderRules() {
+    return `<div><button class="back-btn" id="backToMainBtn"><i class="fa-regular fa-arrow-left"></i> назад</button></div>
+            <div class="rules-submenu">
+              <button class="rule-cat-btn" data-rule="1">правила канала</button>
+              <button class="rule-cat-btn" data-rule="2">агенты поддержки</button>
+              <button class="rule-cat-btn" data-rule="3">модераторы</button>
+              <button class="rule-cat-btn" data-rule="4">админы</button>
+            </div>
+            <div id="rulesDisplayArea" class="answer-area" style="background:#f8f7f4;">выберите раздел</div>`;
+  }
+
+  function renderStaff() {
+    return `<div><button class="back-btn" id="backToMainStaffBtn"><i class="fa-regular fa-arrow-left"></i> назад</button></div>
+            <div class="staff-submenu">
+              <button class="staff-cat-btn" data-staff="agents">агенты</button>
+              <button class="staff-cat-btn" data-staff="mods">модераторы</button>
+              <button class="staff-cat-btn" data-staff="admins">админы</button>
+              <button class="staff-cat-btn" data-staff="headadmin">главный админ</button>
+              <button class="staff-cat-btn" data-staff="creator">создатель</button>
+            </div>
+            <div id="staffAnswerArea" class="answer-area" style="background:#f8f7f4; text-align:center;">выберите категорию</div>`;
+  }
+
+  function renderNews() { return getNewsHtml(); }
+  function renderRequests() { return getRequestsHtml(); }
+  function renderGame() { return getSquidGameHtml(); }
+
+  function refreshUI() {
+    const container = document.getElementById("dynamicContent");
+    let html = "";
+    switch(currentMode) {
+      case "main": html = renderMainMenu(); break;
+      case "questions": html = renderQuestions(); break;
+      case "complaint": html = renderComplaint(); break;
+      case "rules": html = renderRules(); break;
+      case "staff": html = renderStaff(); break;
+      case "news": html = renderNews(); break;
+      case "requests": html = renderRequests(); break;
+      case "game": html = renderGame(); break;
+      default: html = renderMainMenu();
+    }
+    container.innerHTML = html;
+    attachEvents();
+  }
+
+  function attachEvents() {
+    const map = {
+      questionsBtn: "questions", complaintBtn: "complaint", rulesBtn: "rules",
+      staffBtn: "staff", newsBtn: "news", requestsBtn: "requests", gameBtn: "game"
+    };
+    Object.keys(map).forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.onclick = () => { currentMode = map[id]; refreshUI(); };
+    });
+
+    const backs = ["backFromQuestionsBtn","backFromComplaintBtn","backToMainBtn","backToMainStaffBtn","backFromNewsBtn","backFromRequestsBtn","backFromGameBtn"];
+    backs.forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.onclick = () => { currentMode = "main"; refreshUI(); };
+    });
+
+    document.querySelectorAll(".q-btn").forEach(btn => {
+      btn.onclick = () => {
+        const qid = parseInt(btn.dataset.qid);
+        const area = document.getElementById("questionAnswerArea");
+        if (area && !isNaN(qid) && answersMap[qid]) {
+          area.innerHTML = escapeHtml(getFormattedAnswer(qid)).replace(/\n/g, '<br>');
+        } else if (area) area.innerHTML = "❓ ответ не найден. напишите заявку №3";
+      };
+    });
+
+    document.querySelectorAll(".rule-cat-btn").forEach(btn => {
+      btn.onclick = () => {
+        const id = parseInt(btn.dataset.rule);
+        const area = document.getElementById("rulesDisplayArea");
+        if (area && id >=1 && id <=4) area.innerHTML = renderSpecificRule(id);
+        else if (area) area.innerHTML = "неверный раздел";
+      };
+    });
+
+    document.querySelectorAll(".staff-cat-btn").forEach(btn => {
+      btn.onclick = () => {
+        const type = btn.dataset.staff;
+        const area = document.getElementById("staffAnswerArea");
+        if (area) {
+          const info = getStaffInfo(type);
+          area.innerHTML = info === "нет данных" ? `<em>${escapeHtml(info)}</em>` : `<strong>${escapeHtml(info)}</strong>`;
+        }
+      };
+    });
+
+    document.querySelectorAll(".copy-btn").forEach(btn => {
+      btn.onclick = () => {
+        const text = btn.dataset.copytext;
+        if (text) {
+          navigator.clipboard.writeText(text).then(() => {
+            const orig = btn.innerHTML;
+            btn.innerHTML = '<i class="fa-regular fa-check"></i> скопировано';
+            setTimeout(() => btn.innerHTML = orig, 1500);
+          }).catch(() => alert("не удалось скопировать"));
+        }
+      };
+    });
+  }
+
+  function escapeHtml(str) {
+    if (!str) return '';
+    return str.replace(/[&<>]/g, m => m === '&' ? '&amp;' : m === '<' ? '&lt;' : '&gt;');
+  }
+  function escapeHtmlAttr(str) {
+    if (!str) return '';
+    return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+  }
+
+  refreshUI();
+</script>
+</body>
+</html>
